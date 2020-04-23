@@ -1,4 +1,4 @@
-# Regular Expression Cheatsheet [![build](https://github.com/yuanqing/regular-expression-cheatsheet/workflows/build/badge.svg)](https://github.com/yuanqing/regular-expression-cheatsheet/actions?query=workflow%3Abuild)
+# Regular Expressions Cheatsheet [![build](https://github.com/yuanqing/regular-expressions-cheatsheet/workflows/build/badge.svg)](https://github.com/yuanqing/regular-expressions-cheatsheet/actions?query=workflow%3Abuild)
 
 > An opinionated cheatsheet for using regular expressions in JavaScript
 
@@ -218,10 +218,10 @@ Expression | Description
 `(foo)` | capturing group; match and capture `foo`
 `(?:foo)` | non-capturing group; match the group but without capturing `foo`
 
-- Use a non-capturing group to “group” expressions, without capturing.
 - Capturing groups are only relevant in the following methods:
     - `string.matchAll(regexp)`
     - `string.replace(regexp, callback)`
+- Use a non-capturing group to “group” expressions, without capturing.
 
 ### Flags
 
