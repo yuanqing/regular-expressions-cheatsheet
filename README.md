@@ -113,7 +113,7 @@ function callback (x) {
 #### Normal characters
 
 Expression | Description
---:|:--|:--
+--:|:--
 `.` or `[^\n\r]` | any character *excluding* a newline or carriage return†
 `[A-Za-z]` | alphabet
 `[a-z]` | lowercase alphabet
@@ -127,7 +127,7 @@ Expression | Description
 #### Whitespace characters
 
 Expression | Description
---:|:--|:--
+--:|:--
 ` ` | space
 `\t` | tab
 `\n` | newline
@@ -137,7 +137,7 @@ Expression | Description
 #### Character set
 
 Expression | Description
---:|:--|:--
+--:|:--
 `[.,]` | `.` or `,`
 `[xyz]` | either `x`, `y` or `z`
 `[^xyz]` | neither `x`, `y` nor `z`
@@ -152,7 +152,7 @@ Expression | Description
 ##### Outside a character set
 
 Expression | Description
---:|:--|:--
+--:|:--
 `\.` | period
 `\^` | caret
 `\$` | dollar sign
@@ -168,7 +168,7 @@ Expression | Description
 ##### Inside a character set
 
 Expression | Description
---:|:--|:--
+--:|:--
 `\\` | back slash
 `\]` | close square bracket
 
@@ -178,7 +178,7 @@ Expression | Description
 ### Quantifiers
 
 Expression | Description
---:|:--|:--
+--:|:--
 `{2}` | Exactly 2
 `{2,}` | At least 2
 `{2,7}` | At least 2 but no more than 7
@@ -191,7 +191,7 @@ Expression | Description
 ### Boundaries
 
 Expression | Description
-:--|:--
+--:|:--
 `^` | start of string
 `$` | end of string
 `\b` | word boundary
@@ -204,7 +204,7 @@ Expression | Description
 ### Matching
 
 Expression | Description
-:--|:--
+--:|:--
 `foo|bar` | match either `foo` or `bar`
 `foo(?=bar)` | match `foo` if it’s before `bar`
 `foo(?!bar)` | match `foo` if it’s *not* before `bar`
@@ -214,7 +214,7 @@ Expression | Description
 ### Grouping and capturing
 
 Expression | Description
-:--|:--
+--:|:--
 `(foo)` | capturing group; match and capture `foo`
 `(?:foo)` | non-capturing group; match the group but without capturing `foo`
 
@@ -226,7 +226,7 @@ Expression | Description
 ### Flags
 
 Flag | Description
-:--|:--
+--:|:--
 `g` | global search
 `i` | case-insensitive search
 `m` | multi-line search
