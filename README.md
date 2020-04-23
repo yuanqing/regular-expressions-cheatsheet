@@ -73,7 +73,7 @@ const result = []
 for (const match of iterator) {
   result.push(match[0])
 }
-result //=> ['x', 'x]
+result //=> ['x', 'x']
 ```
 
 ### string.replace(regexp, newSubString)
