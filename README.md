@@ -114,7 +114,7 @@ function callback (x) {
 
 Expression | Description
 --:|:--
-`.` or `[^\n\r]` | any character *excluding* a newline or carriage return†
+`.` or `[^\n\r]` | any character *excluding* a newline or carriage return
 `[A-Za-z]` | alphabet
 `[a-z]` | lowercase alphabet
 `[A-Z]` | uppercase alphabet
@@ -132,7 +132,7 @@ Expression | Description
 `\t` | tab
 `\n` | newline
 `\r` | carriage return
-`\s` | space, tab, newline or carriage return†
+`\s` | space, tab, newline or carriage return
 
 #### Character set
 
