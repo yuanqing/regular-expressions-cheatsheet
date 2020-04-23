@@ -138,14 +138,14 @@ Expression | Description
 
 Expression | Description
 --:|:--
-`[.,]` | `.` or `,`
+`[.,]` | either `.` or `,`
 `[xyz]` | either `x`, `y` or `z`
 `[^xyz]` | neither `x`, `y` nor `z`
 `[1-3]` | either `1`, `2` or `3`
 `[^1-3]` | neither `1`, `2` nor `3`
 
 - Think of a character set as an `OR` operation on the single characters enclosed within it.
-- Within the square brackets, `.` means a literal period.
+- Within square brackets, `.` means a literal period.
 
 #### Escaping characters
 
@@ -179,12 +179,12 @@ Expression | Description
 
 Expression | Description
 --:|:--
-`{2}` | Exactly 2
-`{2,}` | At least 2
-`{2,7}` | At least 2 but no more than 7
+`{2}` | exactly 2
+`{2,}` | at least 2
+`{2,7}` | at least 2 but no more than 7
 `*` | 0 or more
 `+` | 1 or more
-`?` | Exactly 0 or 1
+`?` | exactly 0 or 1
 
 - The quantifier goes *after* the expression to be quantified.
 
