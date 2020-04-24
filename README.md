@@ -28,7 +28,7 @@
 ## Caveats
 
 - Follows my mental model.
-- Intentionally non-comprehensive. Only includes syntax and parts of the API that I typically use.
+- Intentionally non-comprehensive. Only includes syntax and parts of the API that I actually use.
 - Certain concepts are imprecisely defined. (For example, certain definitions does not account for characters that are very rarely encountered in input strings.)
 
 ## API
@@ -75,6 +75,22 @@
     'xx'.match(/x/).slice()  //=> ['x']
     'xx'.match(/x/g).slice() //=> ['x', 'x']
     ```
+
+- ***(Pitfall)*** Match with capturing group
+
+    ```js
+    'xy'.match(/x(y)/).slice() //=> ['xy', 'y']
+    ```
+
+    > Returns the first match followed by substrings captured within the first match
+
+- ***(Pitfall)*** Match with capturing group and `/g` flag
+
+    ```js
+    'xyxy'.match(/x(y)/g).slice() //=> ['xy', 'xy']
+    ```
+
+    > Returns just the matches only (capturing groups are ignored)
 
 ### string.matchAll(regexp)
 
