@@ -10,7 +10,7 @@ test('match', function (t) {
   t.is(/x/.test('xx'), true)
 })
 
-test('stateful with the `g` flag', function (t) {
+test('match, with `g` flag', function (t) {
   t.plan(7)
   const regexp = /x/g
   t.is(regexp.lastIndex, 0)

@@ -35,124 +35,153 @@
 
 ### regexp.test(string)
 
-- No matches
+> There should be no capturing groups and no `g` flag in `regexp`.
 
-    ```js
-    /y/.test('xx') //=> false
-    ```
+#### No matches
 
-- Match
+```js
+/y/.test('xx') //=> false
+```
 
-    ```js
-    /x/.test('xx') //=> true
-    ```
+#### Match
 
-- ***(Pitfall)*** Stateful with the `g` flag
+```js
+/x/.test('xx') //=> true
+```
 
-    ```js
-    const regexp = /x/g
-    regexp.lastIndex  //=> 0
-    regexp.test('xx') //=> true
-    regexp.lastIndex  //=> 1
-    regexp.test('xx') //=> true
-    regexp.lastIndex  //=> 2
-    regexp.test('xx') //=> false
-    regexp.lastIndex  //=> 0
-    ```
+#### *(Pitfall)* Match, with `g` flag
+
+> `regexp.lastIndex` may change with each call to `regexp.test(string)`.
+
+```js
+const regexp = /x/g
+regexp.lastIndex  //=> 0
+regexp.test('xx') //=> true
+regexp.lastIndex  //=> 1
+regexp.test('xx') //=> true
+regexp.lastIndex  //=> 2
+regexp.test('xx') //=> false
+regexp.lastIndex  //=> 0
+```
 
 ### string.match(regexp)
 
-- No matches
+> There should be no capturing groups if there’s also a `g` flag in `regexp`.
 
-    ```js
-    'xx'.match(/y/)  //=> null
-    'xx'.match(/y/g) //=> null
-    ```
+#### No matches
 
-- Match
+```js
+'xx'.match(/y/)  //=> null
+'xx'.match(/y/g) //=> null
+```
 
-    ```js
-    'xx'.match(/x/).slice()  //=> ['x']
-    'xx'.match(/x/g).slice() //=> ['x', 'x']
-    ```
+#### Match
 
-- ***(Pitfall)*** Match with capturing group
+```js
+'xx'.match(/x/).slice()  //=> ['x']
+'xx'.match(/x/g).slice() //=> ['x', 'x']
+```
 
-    ```js
-    'xy'.match(/x(y)/).slice() //=> ['xy', 'y']
-    ```
+#### Match, with capturing group, without `g` flag
 
-    > Returns the first match followed by substrings captured within the first match
+```js
+'xyxy'.match(/x(y)/).slice() //=> ['xy', 'y']
+```
 
-- ***(Pitfall)*** Match with capturing group and `/g` flag
+#### *(Pitfall)* Match, with capturing group, with `g` flag
 
-    ```js
-    'xyxy'.match(/x(y)/g).slice() //=> ['xy', 'xy']
-    ```
+> Capturing groups in `regexp` are ignored; returns the matches only.
 
-    > Returns just the matches only (capturing groups are ignored)
+```js
+'xyxy'.match(/x(y)/g).slice() //=> ['xy', 'xy']
+```
 
 ### string.matchAll(regexp)
 
-- No matches
+> There should always be a `g` flag in `regexp`.
 
-    ```js
-    const iterator = 'xx'.matchAll(/y/g)
-    const result = []
-    for (const match of iterator) {
-      result.push(match[0])
-    }
-    result //=> []
-    ```
+#### No matches
 
-- Match
+```js
+const iterator = 'xx'.matchAll(/y/g)
+const result = []
+for (const match of iterator) {
+    result.push(match[0])
+}
+result //=> []
+```
 
-    ```js
-    const iterator = 'xx'.matchAll(/x/g)
-    const result = []
-    for (const match of iterator) {
-      result.push(match[0])
-    }
-    result //=> ['x', 'x']
-    ```
+#### Match
+
+```js
+const iterator = 'xx'.matchAll(/x/g)
+const result = []
+for (const match of iterator) {
+  result.push(match[0])
+}
+result //=> ['x', 'x']
+```
+
+#### Match, with capturing group
+
+```js
+const iterator = 'xyxy'.matchAll(/x(y)/g)
+const result = []
+for (const match of iterator) {
+  result.push([match[0], match[1]])
+}
+result //=> [['xy', 'y'], ['xy', 'y']]
+```
 
 ### string.replace(regexp, newSubString)
 
-- No matches
+> There should be no capturing groups in `regexp`.
 
-    ```js
-    'xx'.replace(/y/, 'z')  //=> 'xx'
-    'xx'.replace(/y/g, 'z') //=> 'xx'
-    ```
+#### No matches
 
-- Match
+```js
+'xx'.replace(/y/, 'z')  //=> 'xx'
+'xx'.replace(/y/g, 'z') //=> 'xx'
+```
 
-    ```js
-    'xx'.replace(/x/, 'z')  //=> 'zx'
-    'xx'.replace(/x/g, 'z') //=> 'zz'
-    ```
+#### Match
+
+```js
+'xx'.replace(/x/, 'z')  //=> 'zx'
+'xx'.replace(/x/g, 'z') //=> 'zz'
+```
 
 ### string.replace(regexp, callback)
 
-- No matches
+#### No matches
 
-    ```js
-    function callback (x) {
-      return x.toUpperCase()
-    }
-    'xx'.replace(/y/, callback)  //=> 'xx'
-    'xx'.replace(/y/g, callback) //=> 'xx'
-    ```
+```js
+function callback (match) {
+  return match.toUpperCase()
+}
+'xx'.replace(/y/, callback)  //=> 'xx'
+'xx'.replace(/y/g, callback) //=> 'xx'
+```
 
-- Match
+#### Match
 
-    ```js
-    function callback (x) {
-      return x.toUpperCase()
-    }
-    'xx'.replace(/x/, callback)  //=> 'Xx'
-    'xx'.replace(/x/g, callback) //=> 'XX'
-    ```
+```js
+function callback (match) {
+  return match.toUpperCase()
+}
+'xx'.replace(/x/, callback)  //=> 'Xx'
+'xx'.replace(/x/g, callback) //=> 'XX'
+```
+
+#### Match, with capturing group
+
+```js
+function callback (match, y) {
+  return `${match.toUpperCase()}${y.toUpperCase()}`
+}
+'xyxy'.replace(/x(y)/, callback)  //=> 'XYYxy'
+'xyxy'.replace(/x(y)/g, callback) //=> 'XYYXYY'
+```
 
 ## Syntax
 
@@ -191,7 +220,7 @@ Expression | Description
 
 - Think of a character set as an `OR` operation on the single characters that are enclosed between the square brackets.
 - Use `^` after the opening `[` to “negate” the character set.
-- Within the square brackets, `.` means a literal period.
+- Within a character set, `.` means a literal period.
 
 ### Characters that require escaping
 
@@ -202,24 +231,25 @@ Expression | Description
 `\.` | period
 `\^` | caret
 `\$` | dollar sign
+`\|` | pipe
 `\\` | back slash
 `\/` | forward slash
 `\(` | opening bracket
 `\)` | closing bracket
 `\[` | opening square bracket
 `\]` | closing square bracket
-
-- `-` and `_` need *not* be escaped.
+`\{` | opening curly bracket
+`\}` | closing curly bracket
 
 #### Inside a character set
 
 Expression | Description
 --:|:--
 `\\` | back slash
-`\]` | close square bracket
+`\]` | closing square bracket
 
-- A `^` literal must be escaped only if it occurs immediately after the opening `[` of a character set.
-- A `-` literal must be escaped only if it occurs between two alphabets or two digits.
+- A `^` must be escaped only if it occurs immediately after the opening `[` of the character set.
+- A `-` must be escaped only if it occurs between two alphabets or two digits.
 
 ### Quantifiers
 
@@ -265,9 +295,9 @@ Expression | Description
 `(?:foo)` | non-capturing group; match the group but without capturing `foo`
 
 - Capturing groups are only relevant in the following methods:
+    - `string.match(regexp)`
     - `string.matchAll(regexp)`
     - `string.replace(regexp, callback)`
-- Use a non-capturing group to “group” expressions, without capturing.
 
 ### Flags
 
@@ -277,7 +307,7 @@ Flag | Description
 `i` | case-insensitive search
 `m` | multi-line search
 
-- If the `g` flag is used, `regexp.lastIndex` may change with every call to `regexp.test(string)`.
+- If the `g` flag is used, `regexp.lastIndex` may change with each call to `regexp.test(string)`.
 - If the `m` flag is used, `^` and `$` will match the start and end of each line.
 
 ## References and tools

@@ -12,12 +12,12 @@ test('match', function (t) {
   t.deepEqual('xx'.match(/x/g).slice(), ['x', 'x'])
 })
 
-test('match with capturing group', function (t) {
+test('match, with capturing group, without `g` flag', function (t) {
   t.plan(1)
-  t.deepEqual('xy'.match(/x(y)/).slice(), ['xy', 'y'])
+  t.deepEqual('xyxy'.match(/x(y)/).slice(), ['xy', 'y'])
 })
 
-test('match with capturing group and `g` flag', function (t) {
+test('match, with capturing group, with `g` flag', function (t) {
   t.plan(1)
   t.deepEqual('xyxy'.match(/x(y)/g).slice(), ['xy', 'xy'])
 })
