@@ -16,8 +16,6 @@
   - [Whitespace characters](#whitespace-characters)
   - [Character set](#character-set)
   - [Characters that require escaping](#characters-that-require-escaping)
-    - [Outside a character set](#outside-a-character-set)
-    - [Inside a character set](#inside-a-character-set)
   - [Quantifiers](#quantifiers)
   - [Boundaries](#boundaries)
   - [Matching](#matching)
