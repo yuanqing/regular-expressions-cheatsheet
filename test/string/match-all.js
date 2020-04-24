@@ -1,6 +1,7 @@
 const test = require('ava')
 
 test('no matches', function (t) {
+  t.plan(1)
   const iterator = 'xx'.matchAll(/y/g)
   const result = []
   for (const match of iterator) {
@@ -10,6 +11,7 @@ test('no matches', function (t) {
 })
 
 test('match', function (t) {
+  t.plan(1)
   const iterator = 'xx'.matchAll(/x/g)
   const result = []
   for (const match of iterator) {

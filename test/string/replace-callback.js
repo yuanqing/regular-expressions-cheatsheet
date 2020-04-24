@@ -1,6 +1,7 @@
 const test = require('ava')
 
 test('no matches', function (t) {
+  t.plan(2)
   function callback (x) {
     return x.toUpperCase()
   }
@@ -9,6 +10,7 @@ test('no matches', function (t) {
 })
 
 test('match', function (t) {
+  t.plan(2)
   function callback (x) {
     return x.toUpperCase()
   }
