@@ -106,7 +106,7 @@ regexp.lastIndex  //=> 0
 const iterator = 'xx'.matchAll(/y/g)
 const result = []
 for (const match of iterator) {
-    result.push(match[0])
+  result.push(match[0])
 }
 result //=> []
 ```
