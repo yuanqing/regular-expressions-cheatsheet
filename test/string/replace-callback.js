@@ -9,7 +9,7 @@ test('no matches', function (t) {
 })
 
 test('match', function (t) {
-  function callback (x, p1, p2) {
+  function callback (x) {
     return x.toUpperCase()
   }
   t.is('xx'.replace(/x/, callback), 'Xx')
