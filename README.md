@@ -28,89 +28,120 @@
 
 ## Caveats
 
-- Follows my mental model, which may not square with yours.
+- Follows my mental model.
 - Intentionally non-comprehensive. Only includes syntax and parts of the API that I typically use.
-- Certain concepts are imprecisely defined. (For example, does not account for characters that are very rarely encountered in input strings.)
+- Certain concepts are imprecisely defined. (For example, certain definitions does not account for characters that are very rarely encountered in input strings.)
 
 ## API
 
 ### regexp.test(string)
 
-```js
-/y/.test('xx') //=> `false`
-```
+- No matches
 
-```js
-/x/.test('xx') //=> `true`
-```
+    ```js
+    /y/.test('xx') //=> false
+    ```
+
+- Match
+
+    ```js
+    /x/.test('xx') //=> true
+    ```
+
+- ***(Pitfall)*** Stateful with the `g` flag
+
+    ```js
+    const regexp = /x/g
+    regexp.lastIndex  //=> 0
+    regexp.test('xx') //=> true
+    regexp.lastIndex  //=> 1
+    regexp.test('xx') //=> true
+    regexp.lastIndex  //=> 2
+    regexp.test('xx') //=> false
+    regexp.lastIndex  //=> 0
+    ```
 
 ### string.match(regexp)
 
-```js
-'xx'.match(/y/)  //=> null
-'xx'.match(/y/g) //=> null
-```
+- No matches
 
-```js
-'xx'.match(/x/).slice()  //=> ['x']
-'xx'.match(/x/g).slice() //=> ['x', 'x']
-```
+    ```js
+    'xx'.match(/y/)  //=> null
+    'xx'.match(/y/g) //=> null
+    ```
+
+- Match
+
+    ```js
+    'xx'.match(/x/).slice()  //=> ['x']
+    'xx'.match(/x/g).slice() //=> ['x', 'x']
+    ```
 
 ### string.matchAll(regexp)
 
-```js
-const iterator = 'xx'.matchAll(/y/g)
-const result = []
-for (const match of iterator) {
-  result.push(match[0])
-}
-result //=> []
-```
+- No matches
 
-```js
-const iterator = 'xx'.matchAll(/x/g)
-const result = []
-for (const match of iterator) {
-  result.push(match[0])
-}
-result //=> ['x', 'x']
-```
+    ```js
+    const iterator = 'xx'.matchAll(/y/g)
+    const result = []
+    for (const match of iterator) {
+      result.push(match[0])
+    }
+    result //=> []
+    ```
+
+- Match
+
+    ```js
+    const iterator = 'xx'.matchAll(/x/g)
+    const result = []
+    for (const match of iterator) {
+      result.push(match[0])
+    }
+    result //=> ['x', 'x']
+    ```
 
 ### string.replace(regexp, newSubString)
 
-```js
-'xx'.replace(/y/, 'z')  //=> 'xx'
-'xx'.replace(/y/g, 'z') //=> 'xx'
-```
+- No matches
 
-```js
-'xx'.replace(/x/, 'z')  //=> 'zx'
-'xx'.replace(/x/g, 'z') //=> 'zz'
-```
+    ```js
+    'xx'.replace(/y/, 'z')  //=> 'xx'
+    'xx'.replace(/y/g, 'z') //=> 'xx'
+    ```
+
+- Match
+
+    ```js
+    'xx'.replace(/x/, 'z')  //=> 'zx'
+    'xx'.replace(/x/g, 'z') //=> 'zz'
+    ```
 
 ### string.replace(regexp, callback)
 
-```js
-function callback (x) {
-  return x.toUpperCase()
-}
-'xx'.replace(/y/, callback)  //=> 'xx'
-'xx'.replace(/y/g, callback) //=> 'xx'
-```
+- No matches
 
-```js
-function callback (x) {
-  return x.toUpperCase()
-}
-'xx'.replace(/x/, callback)  //=> 'Xx'
-'xx'.replace(/x/g, callback) //=> 'XX'
-```
+    ```js
+    function callback (x) {
+      return x.toUpperCase()
+    }
+    'xx'.replace(/y/, callback)  //=> 'xx'
+    'xx'.replace(/y/g, callback) //=> 'xx'
+    ```
+
+- Match
+
+    ```js
+    function callback (x) {
+      return x.toUpperCase()
+    }
+    'xx'.replace(/x/, callback)  //=> 'Xx'
+    'xx'.replace(/x/g, callback) //=> 'XX'
+    ```
 
 ## Syntax
 
-### Single characters
-
-#### Normal characters
+### Normal characters
 
 Expression | Description
 --:|:--
@@ -124,7 +155,7 @@ Expression | Description
 `\w` or `[A-Za-z0-9_]` | alphabet, digit or underscore
 `\W` or `[^A-Za-z0-9_]` | non-alphabet, non-digit and non-underscore
 
-#### Whitespace characters
+### Whitespace characters
 
 Expression | Description
 --:|:--
@@ -134,22 +165,22 @@ Expression | Description
 `\r` | carriage return
 `\s` | space, tab, newline or carriage return
 
-#### Character set
+### Character set
 
 Expression | Description
 --:|:--
-`[.,]` | either `.` or `,`
 `[xyz]` | either `x`, `y` or `z`
 `[^xyz]` | neither `x`, `y` nor `z`
 `[1-3]` | either `1`, `2` or `3`
 `[^1-3]` | neither `1`, `2` nor `3`
 
-- Think of a character set as an `OR` operation on the single characters enclosed within it.
-- Within square brackets, `.` means a literal period.
+- Think of a character set as an `OR` operation on the single characters that are enclosed between the square brackets.
+- Use `^` after the opening `[` to “negate” the character set.
+- Within the square brackets, `.` means a literal period.
 
-#### Escaping characters
+### Characters that require escaping
 
-##### Outside a character set
+#### Outside a character set
 
 Expression | Description
 --:|:--
@@ -158,22 +189,22 @@ Expression | Description
 `\$` | dollar sign
 `\\` | back slash
 `\/` | forward slash
-`\(` | open bracket
-`\)` | close bracket
-`\[` | open square bracket
-`\]` | close square bracket
+`\(` | opening bracket
+`\)` | closing bracket
+`\[` | opening square bracket
+`\]` | closing square bracket
 
 - `-` and `_` need *not* be escaped.
 
-##### Inside a character set
+#### Inside a character set
 
 Expression | Description
 --:|:--
 `\\` | back slash
 `\]` | close square bracket
 
-- `^` must be escaped only if it occurs immediately after the opening `[` of the character set.
-- `-` must be escaped only if it occurs between two alphabets or two digits.
+- A `^` literal must be escaped only if it occurs immediately after the opening `[` of a character set.
+- A `-` literal must be escaped only if it occurs between two alphabets or two digits.
 
 ### Quantifiers
 
@@ -205,7 +236,7 @@ Expression | Description
 
 Expression | Description
 --:|:--
-`foo|bar` | match either `foo` or `bar`
+`foo\|bar` | match either `foo` or `bar`
 `foo(?=bar)` | match `foo` if it’s before `bar`
 `foo(?!bar)` | match `foo` if it’s *not* before `bar`
 `(?<=bar)foo` | match `foo` if it’s after `bar`
@@ -231,7 +262,8 @@ Flag | Description
 `i` | case-insensitive search
 `m` | multi-line search
 
-- If the `m` flag is used, `^` and `$` match at the start and end of each line.
+- If the `g` flag is used, `regexp.lastIndex` may change with every call to `regexp.test(string)`.
+- If the `m` flag is used, `^` and `$` will match the start and end of each line.
 
 ## References and tools
 
