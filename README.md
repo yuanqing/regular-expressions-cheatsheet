@@ -1,6 +1,6 @@
 # Regular Expressions Cheatsheet [![build](https://github.com/yuanqing/regular-expressions-cheatsheet/workflows/build/badge.svg)](https://github.com/yuanqing/regular-expressions-cheatsheet/actions?query=workflow%3Abuild)
 
-> An opinionated cheatsheet for using Regular Expressions in JavaScript
+> A concise cheatsheet for using Regular Expressions in JavaScript
 
 <!-- toc -->
 
