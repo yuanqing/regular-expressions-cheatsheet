@@ -8,14 +8,14 @@
     "toc": "node scripts/insert-toc.js"
   },
   "devDependencies": {
-    "ava": "^3.7.1",
-    "fs-extra": "^9.0.0",
+    "ava": "^3.11.1",
+    "fs-extra": "^9.0.1",
     "husky": "^4.2.5",
-    "lint-staged": "^10.1.7",
+    "lint-staged": "^10.2.11",
     "markdown-toc": "^1.2.0",
-    "prettier-standard": "^16.2.1",
+    "prettier-standard": "^16.4.1",
     "rimraf": "^3.0.2",
-    "standard": "^14.3.3"
+    "standard": "^14.3.4"
   },
   "husky": {
     "hooks": {
