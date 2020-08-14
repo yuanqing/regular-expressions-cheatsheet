@@ -29,7 +29,7 @@
 
 - Follows my mental model.
 - Intentionally non-comprehensive. Only includes syntax and parts of the API that I actually use.
-- Certain concepts are imprecisely defined. (For example, certain definitions does not account for characters that are very rarely encountered in input strings.)
+- Certain concepts are imprecisely defined. (For example, some definitions do not account for characters that are very rarely encountered in input strings.)
 
 ## API
 
@@ -78,14 +78,28 @@ regexp.lastIndex  //=> 0
 #### Match
 
 ```js
-'xx'.match(/x/).slice()  //=> ['x']
-'xx'.match(/x/g).slice() //=> ['x', 'x']
+const matches = 'xx'.match(/x/)
+matches[0]     //=> 'x'
+matches.index  //=> 0
+matches.length //=> 1
+```
+
+```js
+const matches = 'xx'.match(/x/g)
+matches[0]     //=> 'x'
+matches[1]     //=> 'x'
+matches.index  //=> undefined
+matches.length //=> 2
 ```
 
 #### Match, with capturing group, without `g` flag
 
 ```js
-'xyxy'.match(/x(y)/).slice() //=> ['xy', 'y']
+const matches = 'xyxy'.match(/x(y)/)
+matches[0]     //=> 'xy'
+matches[1]     //=> 'y'
+matches.index  //=> 0
+matches.length //=> 2
 ```
 
 #### *(Pitfall)* Match, with capturing group, with `g` flag
@@ -93,7 +107,11 @@ regexp.lastIndex  //=> 0
 > Capturing groups in `regexp` are ignored; returns the matches only.
 
 ```js
-'xyxy'.match(/x(y)/g).slice() //=> ['xy', 'xy']
+const matches = 'xyxy'.match(/x(y)/g)
+matches[0]     //=> 'xy'
+matches[1]     //=> 'xy'
+matches.index  //=> undefined
+matches.length //=> 2
 ```
 
 ### string.matchAll(regexp)
@@ -292,12 +310,14 @@ Expression | Description
 Expression | Description
 --:|:--
 `(foo)` | capturing group; match and capture `foo`
-`(?:foo)` | non-capturing group; match the group but without capturing `foo`
+`(?:foo)` | non-capturing group; match `foo` but *without* capturing `foo`
+`(foo)bar\1` | `\1` is a backreference to the 1st capturing group; match `foobarfoo`
 
 - Capturing groups are only relevant in the following methods:
     - `string.match(regexp)`
     - `string.matchAll(regexp)`
     - `string.replace(regexp, callback)`
+- `\N` is a backreference to the `Nth` capturing group. Capturing groups are numbered starting from 1.
 
 ### Flags
 
