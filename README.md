@@ -194,11 +194,11 @@ function callback (match) {
 #### Match, with capturing group
 
 ```js
-function callback (match, y) {
-  return `${match.toUpperCase()}${y.toUpperCase()}`
+function callback (_, y) {
+  return y.toUpperCase()
 }
-'xyxy'.replace(/x(y)/, callback)  //=> 'XYYxy'
-'xyxy'.replace(/x(y)/g, callback) //=> 'XYYXYY'
+'xyxy'.replace(/x(y)/, callback)  //=> 'Yxy'
+'xyxy'.replace(/x(y)/g, callback) //=> 'YY'
 ```
 
 ## Syntax
@@ -215,7 +215,8 @@ Expression | Description
 `\D` or `[^0-9]` | non-digit
 `_` | underscore
 `\w` or `[A-Za-z0-9_]` | alphabet, digit or underscore
-`\W` or `[^A-Za-z0-9_]` | non-alphabet, non-digit and non-underscore
+`\W` or `[^A-Za-z0-9_]` | inverse of `\w`
+`\S` | inverse of `\s`
 
 ### Whitespace characters
 
