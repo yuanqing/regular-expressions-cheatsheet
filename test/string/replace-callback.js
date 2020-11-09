@@ -20,9 +20,9 @@ test('match', function (t) {
 
 test('match, with capturing group', function (t) {
   t.plan(2)
-  function callback (match, y) {
-    return `${match.toUpperCase()}${y.toUpperCase()}`
+  function callback (_, y) {
+    return y.toUpperCase()
   }
-  t.is('xyxy'.replace(/x(y)/, callback), 'XYYxy')
-  t.is('xyxy'.replace(/x(y)/g, callback), 'XYYXYY')
+  t.is('xyxy'.replace(/x(y)/, callback), 'Yxy')
+  t.is('xyxy'.replace(/x(y)/g, callback), 'YY')
 })
